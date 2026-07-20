@@ -1,5 +1,7 @@
 #A Python application that calculates recommended breeding dates for canary pairs using a biorhythm-based breeding cycle. The interface is written in Czech because the software was developed for a Czech client. This demonstrates adapting software to the user's language and requirements rather than using English by default.
 
+#########################################
+
 from datetime import datetime, date, timedelta
 
 print("KALKULÁTOR PÁROVÁNÍ KANÁRŮ")
