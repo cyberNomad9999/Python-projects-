@@ -1,0 +1,64 @@
+from datetime import datetime, date, timedelta
+
+print("KALKULÁTOR PÁROVÁNÍ KANÁRŮ")
+print()
+
+male_text = input("Datum vylíhnutí samce (DD/MM/YYYY): ")
+female_text = input("Datum vylíhnutí samice (DD/MM/YYYY): ")
+
+male_hatch = datetime.strptime(male_text, "%d/%m/%Y").date()
+female_hatch = datetime.strptime(female_text, "%d/%m/%Y").date()
+
+start_date = date.today()
+end_date = start_date + timedelta(days=5 * 365 + 2)
+
+suitable_dates = []
+checking_date = start_date
+
+while checking_date <= end_date:
+    male_age = (checking_date - male_hatch).days
+    female_age = (checking_date - female_hatch).days
+
+    male_cycle_day = (male_age % 23) + 1
+    female_cycle_day = (female_age % 28) + 1
+
+    if 5 <= male_cycle_day <= 8 and 5 <= female_cycle_day <= 9:
+        suitable_dates.append(checking_date)
+
+    checking_date += timedelta(days=1)
+
+print()
+print("Doporučená období párování na příštích 5 let:")
+print()
+
+if not suitable_dates:
+    print("Nebyla nalezena žádná vhodná období.")
+
+else:
+    period_start = suitable_dates[0]
+    period_end = suitable_dates[0]
+
+    for suitable_date in suitable_dates[1:]:
+        if suitable_date == period_end + timedelta(days=1):
+            period_end = suitable_date
+        else:
+            if period_start == period_end:
+                print(period_start.strftime("%d.%m.%Y"))
+            else:
+                print(
+                    period_start.strftime("%d.%m.%Y"),
+                    "až",
+                    period_end.strftime("%d.%m.%Y")
+                )
+
+            period_start = suitable_date
+            period_end = suitable_date
+
+    if period_start == period_end:
+        print(period_start.strftime("%d.%m.%Y"))
+    else:
+        print(
+            period_start.strftime("%d.%m.%Y"),
+            "až",
+            period_end.strftime("%d.%m.%Y")
+        )
